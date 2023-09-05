@@ -1,51 +1,52 @@
 package com.example.lab_1
 
+import android.graphics.Color.blue
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.view.View
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var radioGroup: RadioGroup
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.lab1_task2)
+        setContentView(R.layout.activity_main)
 
-//        var count=1
-//        var num: TextView= findViewById<TextView>(R.id.counter)
-//        var ltoast : Button = findViewById<Button>(R.id.toast)
-//        var click : Button = findViewById<Button>(R.id.counterButton)
-//
-//        click.setOnClickListener {
-//            num.setText(""+count++)
-//        }
-//
-//        ltoast.setOnClickListener {
-//            Toast.makeText(this,"This is Toast",Toast.LENGTH_LONG).show()
-//        }
+        radioGroup = findViewById(R.id.radio_group)
 
+        val change: Button = findViewById(R.id.button)
 
-        var mesage: TextView = findViewById(R.id.message)
-        var btn: Button= findViewById(R.id.button2)
+        change.setOnClickListener {
+            var id: Int = radioGroup.checkedRadioButtonId
 
-        btn.setOnClickListener {
-            var numb: EditText= findViewById(R.id.num)
-            var myNewInt: Int = numb.text.toString().toInt()
+            // Is any radio button checked from radio group?
+            if (id != -1){
+                // Get the instance of radio button using id
+                val radio: RadioButton = findViewById(id)
+                val l1 = findViewById<View>(R.id.background) as LinearLayout
 
-            val rnds = (0..10).random()
+                if(radio.text=="Dark"){
+                    l1.setBackgroundColor( android.graphics.Color.parseColor("#FF0E0E0E"));
 
-            if(myNewInt>rnds){
-                mesage.setText("Too High")
-            }else if(myNewInt<rnds){
-                mesage.setText("Too Low")
-            }else{
-                mesage.setText("Congrats")
+                }else if(radio.text=="Light"){
+                    l1.setBackgroundColor( android.graphics.Color.parseColor("#FFFFFEFE"));
+                }else if(radio.text=="Green"){
+                    l1.setBackgroundColor( android.graphics.Color.parseColor("#FF4CAF50"));
+                }else if(radio.text=="Red"){
+                    l1.setBackgroundColor( android.graphics.Color.parseColor("#FFF44336"));
+                }
+
+                //You can also use "applicationContext" in place of "this" as
+                //the first parameter to makeText method
+                Toast.makeText(applicationContext,"On button click :" + " ${radio.text}", Toast.LENGTH_SHORT).show()
             }
-
+            else{
+                // If no radio button checked in this radio group
+                Toast.makeText(applicationContext,"On button click :" + " nothing selected",Toast.LENGTH_SHORT).show()
+            }
         }
-
     }
 }
